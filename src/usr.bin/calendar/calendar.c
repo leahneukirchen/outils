@@ -35,7 +35,6 @@
 #include <err.h>
 #include <errno.h>
 #include <locale.h>
-#include <login_cap.h>
 #include <pwd.h>
 #include <signal.h>
 #include <stdio.h>
@@ -171,10 +170,6 @@ main(int argc, char *argv[])
 			case 0:	/* child */
 				(void)setpgid(getpid(), getpid());
 				(void)setlocale(LC_ALL, "");
-				if (setusercontext(NULL, pw, pw->pw_uid,
-				    LOGIN_SETALL ^ LOGIN_SETLOGIN))
-					err(1, "unable to set user context (uid %u)",
-					    pw->pw_uid);
 				if (acstat) {
 					if (chdir(pw->pw_dir) ||
 					    stat(calendarFile, &sbuf) != 0 ||
