@@ -39,7 +39,14 @@ PREFIX=/usr
 install: all
 	mkdir -p $(DESTDIR)$(PREFIX)/bin $(DESTDIR)$(PREFIX)/share/man/man1
 	install -m755 $(ALL) $(DESTDIR)$(PREFIX)/bin
+	ln -sf md5 $(DESTDIR)$(PREFIX)/bin/sha1
+	ln -sf md5 $(DESTDIR)$(PREFIX)/bin/sha256
+	ln -sf md5 $(DESTDIR)$(PREFIX)/bin/sha512
+	ln -sf md5 $(DESTDIR)$(PREFIX)/bin/cksum
 	install -m644 src/*/*/*.1 $(DESTDIR)$(PREFIX)/share/man/man1
+	ln -sf md5.1 $(DESTDIR)$(PREFIX)/share/man/man1/sha1.1
+	ln -sf md5.1 $(DESTDIR)$(PREFIX)/share/man/man1/sha256.1
+	ln -sf md5.1 $(DESTDIR)$(PREFIX)/share/man/man1/sha512.1
 
 install-calendars:
 	cp -r src/usr.bin/calendar/calendars $(DESTDIR)$(PREFIX)/share/calendar
