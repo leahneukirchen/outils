@@ -105,7 +105,7 @@ getargs(int argc, char *argv[])
 
 	P = S = F = T = 0;		/* capitalized options */
 	while (optind < argc) {
-		switch (ch = getopt(argc, argv, "F:f:P:p:S:s:T:t:")) {
+		switch (ch = getopt(argc, argv, "+F:f:P:p:S:s:T:t:")) {
 		case 'F': case 'f':
 			F = (ch == 'F');
 			/* Validate format string argument. */
