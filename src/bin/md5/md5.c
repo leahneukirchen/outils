@@ -23,6 +23,7 @@
 
 #include <sys/types.h>
 #include <sys/queue.h>
+#include <sys/time.h>
 #include <netinet/in.h>
 #include <ctype.h>
 #include <err.h>
@@ -222,8 +223,7 @@ main(int argc, char **argv)
 			usage();
 		}
 	}
-	optind = 1;
-	optreset = 1;
+	optind = 0;
 	while ((fl = getopt(argc, argv, optstr)) != -1) {
 		switch (fl) {
 		case 'a':
