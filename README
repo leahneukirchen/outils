@@ -1,0 +1,20 @@
+This is outils, a port of some non-standard OpenBSD tools to Linux.
+You need OpenSSL/LibreSSL to build it.
+
+Included are:
+
+     apply — apply a command to a set of arguments
+     calendar — reminder service
+     cksum — display file checksums and block counts
+     gzsig — gzip signing utility
+     jot — print sequential or random data
+     lam — laminate files
+     lndir — create a shadow directory of symbolic links to another directory
+     md5 — calculate a message digest (checksum) for a file
+     rs — reshape a data array
+     signify — cryptographically sign and verify files
+     unvis — revert a visual representation of data back to original form
+     vis — display non-printable characters in a visual format
+
+                                                Christian Neukirchen
+                                              chneukirchen@gmail.com

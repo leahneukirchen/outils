@@ -1,0 +1,5 @@
+src/ is straight from OpenBSD CVS with tiny modifications.
+src/liboutils is from OpenBSD CVS and libressl-portable.
+
+The /Makefile and unmarked headers in liboutils/include/
+are in the public domain.
