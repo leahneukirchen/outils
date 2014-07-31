@@ -1,6 +1,11 @@
 #define __weak_alias(new, old) \
         extern __typeof(old) new __attribute__((weak, alias(#old)))
 #define __dead __attribute__((__noreturn__))
+#define __BEGIN_DECLS
+#define __END_DECLS
+
+#define b64_ntop __b64_ntop
+#define b64_pton __b64_pton
 
 #define NOFILE_MAX NOFILE
 
