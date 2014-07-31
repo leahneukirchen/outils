@@ -5,7 +5,8 @@ LDFLAGS=-Wl,--as-needed -lcrypto
 %: %.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-all: src/usr.bin/apply/apply src/usr.bin/jot/jot src/usr.bin/lam/lam src/usr.bin/lndir/lndir src/bin/md5/md5 src/usr.bin/rs/rs src/usr.bin/gzsig/gzsig src/usr.bin/signify/signify src/usr.bin/calendar/calendar src/usr.bin/vis/vis src/usr.bin/unvis/unvis
+ALL=src/usr.bin/apply/apply src/usr.bin/jot/jot src/usr.bin/lam/lam src/usr.bin/lndir/lndir src/bin/md5/md5 src/usr.bin/rs/rs src/usr.bin/gzsig/gzsig src/usr.bin/signify/signify src/usr.bin/calendar/calendar src/usr.bin/vis/vis src/usr.bin/unvis/unvis
+all: $(ALL)
 
 src/usr.bin/apply/apply: src/usr.bin/apply/apply.o src/liboutils/strlcpy.o
 
@@ -31,3 +32,14 @@ src/usr.bin/unvis/unvis: src/usr.bin/unvis/unvis.o src/liboutils/unvis.o
 
 clean:
 	rm -f src/*/*/*.o
+
+DESTDIR=
+PREFIX=/usr
+
+install: all
+	mkdir -p $(DESTDIR)$(PREFIX)/bin $(DESTDIR)$(PREFIX)/share/man/man1
+	install -m755 $(ALL) $(DESTDIR)$(PREFIX)/bin
+	install -m644 src/*/*/*.1 $(DESTDIR)$(PREFIX)/share/man/man1
+
+install-calendars:
+	cp -r src/usr.bin/calendar/calendars $(DESTDIR)$(PREFIX)/share/calendar
