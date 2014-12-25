@@ -1,5 +1,5 @@
 CFLAGS=-Wall -O2
-CPPFLAGS=-include src/liboutils/outils.h -isystem src/liboutils/include -Isrc/bin/md5 -D_GNU_SOURCE -D_BSD_SOURCE
+CPPFLAGS=-include src/liboutils/outils.h -isystem src/liboutils/include -Isrc/bin/md5 -D_GNU_SOURCE -D_DEFAULT_SOURCE
 LDFLAGS=-Wl,--as-needed -lcrypto
 
 %: %.o
@@ -18,7 +18,7 @@ src/usr.bin/lndir/lndir: src/usr.bin/lndir/lndir.o src/liboutils/strlcpy.o src/l
 
 src/bin/md5/md5: src/bin/md5/md5.o src/bin/md5/crc.o src/liboutils/sha512.o src/liboutils/mem_clr.o src/liboutils/explicit_bzero.o src/liboutils/md5.o src/liboutils/rmd160.o src/liboutils/sha1.o src/liboutils/sha2.o src/liboutils/fgetln.o src/liboutils/base64.o src/liboutils/md5hl.o src/liboutils/rmd160hl.o src/liboutils/sha1hl.o src/liboutils/sha224hl.o src/liboutils/sha256hl.o src/liboutils/sha384hl.o src/liboutils/sha512hl.o
 
-src/usr.bin/rs/rs: src/usr.bin/rs/rs.o src/liboutils/strtonum.o
+src/usr.bin/rs/rs: src/usr.bin/rs/rs.o src/liboutils/strtonum.o src/liboutils/reallocarray.c
 
 src/usr.bin/signify/signify: src/usr.bin/signify/signify.o src/usr.bin/signify/crypto_api.o src/usr.bin/signify/fe25519.o src/usr.bin/signify/mod_ed25519.o src/usr.bin/signify/mod_ge25519.o src/usr.bin/signify/sc25519.o src/usr.bin/signify/smult_curve25519_ref.o src/liboutils/strlcpy.o src/liboutils/base64.o src/liboutils/explicit_bzero.o src/liboutils/ohash.o src/liboutils/arc4random.o src/liboutils/getentropy_linux.o src/liboutils/readpassphrase.o src/liboutils/sha2.o src/liboutils/sha256hl.o src/liboutils/sha512hl.o src/liboutils/timingsafe_bcmp.o src/liboutils/bcrypt_pbkdf.o src/liboutils/blowfish.o
 
