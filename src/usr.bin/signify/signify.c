@@ -1,4 +1,4 @@
-/* $OpenBSD: signify.c,v 1.92 2014/11/20 14:51:42 krw Exp $ */
+/* $OpenBSD: signify.c,v 1.96 2015/01/07 19:53:34 tedu Exp $ */
 /*
  * Copyright (c) 2013 Ted Unangst <tedu@openbsd.org>
  *
@@ -24,6 +24,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
+#include <ohash.h>
 #include <err.h>
 #include <unistd.h>
 #include <readpassphrase.h>
@@ -31,10 +33,6 @@
 #include <sha2.h>
 
 #include "crypto_api.h"
-#ifndef VERIFY_ONLY
-#include <stddef.h>
-#include <ohash.h>
-#endif
 
 #define SIGBYTES crypto_sign_ed25519_BYTES
 #define SECRETBYTES crypto_sign_ed25519_SECRETKEYBYTES
@@ -42,7 +40,7 @@
 
 #define PKALG "Ed"
 #define KDFALG "BK"
-#define FPLEN 8
+#define KEYNUMLEN 8
 
 #define COMMENTHDR "untrusted comment: "
 #define COMMENTHDRLEN 19
@@ -55,19 +53,19 @@ struct enckey {
 	uint32_t kdfrounds;
 	uint8_t salt[16];
 	uint8_t checksum[8];
-	uint8_t fingerprint[FPLEN];
+	uint8_t keynum[KEYNUMLEN];
 	uint8_t seckey[SECRETBYTES];
 };
 
 struct pubkey {
 	uint8_t pkalg[2];
-	uint8_t fingerprint[FPLEN];
+	uint8_t keynum[KEYNUMLEN];
 	uint8_t pubkey[PUBLICBYTES];
 };
 
 struct sig {
 	uint8_t pkalg[2];
-	uint8_t fingerprint[FPLEN];
+	uint8_t keynum[KEYNUMLEN];
 	uint8_t sig[SIGBYTES];
 };
 
@@ -82,7 +80,6 @@ usage(const char *error)
 #ifndef VERIFYONLY
 	    "\t%1$s -C [-q] -p pubkey -x sigfile [file ...]\n"
 	    "\t%1$s -G [-n] [-c comment] -p pubkey -s seckey\n"
-	    "\t%1$s -I [-p pubkey] [-s seckey] [-x sigfile]\n"
 	    "\t%1$s -S [-e] [-x sigfile] -s seckey -m message\n"
 #endif
 	    "\t%1$s -V [-eq] [-x sigfile] -p pubkey -m message\n",
@@ -236,7 +233,7 @@ writeb64file(const char *filename, const char *comment, const void *buf,
 	    COMMENTHDR, comment)) == -1 || nr >= sizeof(header))
 		errx(1, "comment too long");
 	writeall(fd, header, strlen(header), filename);
-	if ((rv = b64_ntop(buf, buflen, b64, sizeof(b64)-1)) == -1)
+	if ((rv = b64_ntop(buf, buflen, b64, sizeof(b64))) == -1)
 		errx(1, "base64 encode failed");
 	b64[rv++] = '\n';
 	writeall(fd, b64, rv, filename);
@@ -300,13 +297,13 @@ generate(const char *pubkeyfile, const char *seckeyfile, int rounds,
 	struct pubkey pubkey;
 	struct enckey enckey;
 	uint8_t xorkey[sizeof(enckey.seckey)];
-	uint8_t fingerprint[FPLEN];
+	uint8_t keynum[KEYNUMLEN];
 	char commentbuf[COMMENTMAXLEN];
 	SHA2_CTX ctx;
 	int i, nr;
 
 	crypto_sign_ed25519_keypair(pubkey.pubkey, enckey.seckey);
-	arc4random_buf(fingerprint, sizeof(fingerprint));
+	arc4random_buf(keynum, sizeof(keynum));
 
 	SHA512Init(&ctx);
 	SHA512Update(&ctx, enckey.seckey, sizeof(enckey.seckey));
@@ -315,7 +312,7 @@ generate(const char *pubkeyfile, const char *seckeyfile, int rounds,
 	memcpy(enckey.pkalg, PKALG, 2);
 	memcpy(enckey.kdfalg, KDFALG, 2);
 	enckey.kdfrounds = htonl(rounds);
-	memcpy(enckey.fingerprint, fingerprint, FPLEN);
+	memcpy(enckey.keynum, keynum, KEYNUMLEN);
 	arc4random_buf(enckey.salt, sizeof(enckey.salt));
 	kdf(enckey.salt, sizeof(enckey.salt), rounds, 1, 1, xorkey, sizeof(xorkey));
 	memcpy(enckey.checksum, digest, sizeof(enckey.checksum));
@@ -332,7 +329,7 @@ generate(const char *pubkeyfile, const char *seckeyfile, int rounds,
 	explicit_bzero(&enckey, sizeof(enckey));
 
 	memcpy(pubkey.pkalg, PKALG, 2);
-	memcpy(pubkey.fingerprint, fingerprint, FPLEN);
+	memcpy(pubkey.keynum, keynum, KEYNUMLEN);
 	if ((nr = snprintf(commentbuf, sizeof(commentbuf), "%s public key",
 	    comment)) == -1 || nr >= sizeof(commentbuf))
 		errx(1, "comment too long");
@@ -375,7 +372,7 @@ sign(const char *seckeyfile, const char *msgfile, const char *sigfile,
 	msg = readmsg(msgfile, &msglen);
 
 	signmsg(enckey.seckey, msg, msglen, sig.sig);
-	memcpy(sig.fingerprint, enckey.fingerprint, FPLEN);
+	memcpy(sig.keynum, enckey.keynum, KEYNUMLEN);
 	explicit_bzero(&enckey, sizeof(enckey));
 
 	memcpy(sig.pkalg, PKALG, 2);
@@ -398,31 +395,6 @@ sign(const char *seckeyfile, const char *msgfile, const char *sigfile,
 
 	free(msg);
 }
-
-static void
-inspect(const char *seckeyfile, const char *pubkeyfile, const char *sigfile)
-{
-	struct sig sig;
-	struct enckey enckey;
-	struct pubkey pubkey;
-	char fp[(FPLEN + 2) / 3 * 4 + 1];
-
-	if (seckeyfile) {
-		readb64file(seckeyfile, &enckey, sizeof(enckey), NULL);
-		b64_ntop(enckey.fingerprint, FPLEN, fp, sizeof(fp));
-		printf("sec fp: %s\n", fp);
-	}
-	if (pubkeyfile) {
-		readb64file(pubkeyfile, &pubkey, sizeof(pubkey), NULL);
-		b64_ntop(pubkey.fingerprint, FPLEN, fp, sizeof(fp));
-		printf("pub fp: %s\n", fp);
-	}
-	if (sigfile) {
-		readb64file(sigfile, &sig, sizeof(sig), NULL);
-		b64_ntop(sig.fingerprint, FPLEN, fp, sizeof(fp));
-		printf("sig fp: %s\n", fp);
-	}
-}
 #endif
 
 static void
@@ -432,7 +404,7 @@ verifymsg(struct pubkey *pubkey, uint8_t *msg, unsigned long long msglen,
 	uint8_t *sigbuf, *dummybuf;
 	unsigned long long siglen, dummylen;
 
-	if (memcmp(pubkey->fingerprint, sig->fingerprint, FPLEN) != 0)
+	if (memcmp(pubkey->keynum, sig->keynum, KEYNUMLEN) != 0)
 		errx(1, "verification failed: checked against wrong key");
 
 	siglen = SIGBYTES + msglen;
@@ -684,7 +656,6 @@ main(int argc, char **argv)
 		NONE,
 		CHECK,
 		GENERATE,
-		INSPECT,
 		SIGN,
 		VERIFY
 	} verb = NONE;
@@ -692,7 +663,7 @@ main(int argc, char **argv)
 
 	rounds = 42;
 
-	while ((ch = getopt(argc, argv, "CGISVc:em:np:qs:x:")) != -1) {
+	while ((ch = getopt(argc, argv, "CGSVc:em:np:qs:x:")) != -1) {
 		switch (ch) {
 #ifndef VERIFYONLY
 		case 'C':
@@ -704,11 +675,6 @@ main(int argc, char **argv)
 			if (verb)
 				usage(NULL);
 			verb = GENERATE;
-			break;
-		case 'I':
-			if (verb)
-				usage(NULL);
-			verb = INSPECT;
 			break;
 		case 'S':
 			if (verb)
@@ -781,9 +747,6 @@ main(int argc, char **argv)
 		if (!pubkeyfile || !seckeyfile)
 			usage("must specify pubkey and seckey");
 		generate(pubkeyfile, seckeyfile, rounds, comment);
-		break;
-	case INSPECT:
-		inspect(seckeyfile, pubkeyfile, sigfile);
 		break;
 	case SIGN:
 		if (!msgfile || !seckeyfile)
