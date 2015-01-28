@@ -1,4 +1,4 @@
-/*	$OpenBSD: md5.c,v 1.77 2014/09/13 16:06:36 doug Exp $	*/
+/*	$OpenBSD: md5.c,v 1.79 2015/01/19 16:43:28 deraadt Exp $	*/
 
 /*
  * Copyright (c) 2001,2003,2005-2007,2010,2013,2014
@@ -49,8 +49,8 @@
 
 #define MAX_DIGEST_LEN	128
 
-#define MIN(a,b) (((a)<(b))?(a):(b))
-#define MAX(a,b) (((a)>(b))?(a):(b))
+#define MINIMUM(a, b)	(((a) < (b)) ? (a) : (b))
+#define MAXIMUM(a, b)	(((a) > (b)) ? (a) : (b))
 
 union ANY_CTX {
 #if !defined(SHA2_ONLY)
@@ -175,9 +175,9 @@ TAILQ_HEAD(hash_list, hash_function);
 
 void digest_end(const struct hash_function *, void *, char *, size_t, int);
 int  digest_file(const char *, struct hash_list *, int);
-int  digest_filelist(const char *, struct hash_function *, int, char **);
 void digest_print(const struct hash_function *, const char *, const char *);
 #if !defined(SHA2_ONLY)
+int  digest_filelist(const char *, struct hash_function *, int, char **);
 void digest_printstr(const struct hash_function *, const char *, const char *);
 void digest_string(char *, struct hash_list *);
 void digest_test(struct hash_list *);
@@ -442,6 +442,7 @@ digest_print(const struct hash_function *hf, const char *what,
 	}
 }
 
+#if !defined(SHA2_ONLY)
 void
 digest_printstr(const struct hash_function *hf, const char *what,
     const char *digest)
@@ -458,6 +459,7 @@ digest_printstr(const struct hash_function *hf, const char *what,
 		break;
 	}
 }
+#endif /* !defined(SHA2_ONLY) */
 
 int
 digest_file(const char *file, struct hash_list *hl, int echo)
@@ -546,8 +548,8 @@ digest_filelist(const char *file, struct hash_function *defhash, int selcount,
 	algorithm_max = algorithm_min = strlen(functions[0].name);
 	for (hf = &functions[1]; hf->name != NULL; hf++) {
 		len = strlen(hf->name);
-		algorithm_max = MAX(algorithm_max, len);
-		algorithm_min = MIN(algorithm_min, len);
+		algorithm_max = MAXIMUM(algorithm_max, len);
+		algorithm_min = MINIMUM(algorithm_min, len);
 	}
 
 	error = found = 0;
