@@ -1,11 +1,11 @@
 CFLAGS=-Wall -O2
-CPPFLAGS=-include src/liboutils/outils.h -isystem src/liboutils/include -Isrc/bin/md5 -D_GNU_SOURCE -D_DEFAULT_SOURCE
+CPPFLAGS=-include src/liboutils/outils.h -isystem src/liboutils/include -Isrc/bin/md5 -D_GNU_SOURCE -D_DEFAULT_SOURCE -DNO_UTIL
 LDFLAGS=-Wl,--as-needed -lcrypto
 
 %: %.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-ALL=src/usr.bin/apply/apply src/usr.bin/jot/jot src/usr.bin/lam/lam src/usr.bin/lndir/lndir src/bin/md5/md5 src/usr.bin/rs/rs src/usr.bin/gzsig/gzsig src/usr.bin/signify/signify src/usr.bin/calendar/calendar src/usr.bin/vis/vis src/usr.bin/unvis/unvis
+ALL=src/usr.bin/apply/apply src/usr.bin/jot/jot src/usr.bin/lam/lam src/usr.bin/lndir/lndir src/bin/md5/md5 src/usr.bin/rs/rs src/usr.bin/gzsig/gzsig src/usr.bin/signify/signify src/usr.bin/calendar/calendar src/usr.bin/vis/vis src/usr.bin/unvis/unvis src/usr.sbin/rdate/rdate
 all: $(ALL)
 
 src/usr.bin/apply/apply: src/usr.bin/apply/apply.o src/liboutils/strlcpy.o
@@ -30,6 +30,8 @@ src/usr.bin/vis/vis: src/usr.bin/vis/vis.o src/usr.bin/vis/foldit.o src/liboutil
 
 src/usr.bin/unvis/unvis: src/usr.bin/unvis/unvis.o src/liboutils/unvis.o
 
+src/usr.sbin/rdate/rdate: src/usr.sbin/rdate/ntp.o src/usr.sbin/rdate/rfc868time.o src/usr.sbin/rdate/rdate.o src/usr.sbin/rdate/ntpleaps.o src/liboutils/arc4random.o src/liboutils/reallocarray.c src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o
+
 clean:
 	rm -f src/*/*/*.o
 
@@ -44,6 +46,7 @@ install: all
 	ln -sf md5 $(DESTDIR)$(PREFIX)/bin/sha512
 	ln -sf md5 $(DESTDIR)$(PREFIX)/bin/cksum
 	install -m644 src/*/*/*.1 $(DESTDIR)$(PREFIX)/share/man/man1
+	install -m644 src/*/*/*.8 $(DESTDIR)$(PREFIX)/share/man/man8
 	ln -sf md5.1 $(DESTDIR)$(PREFIX)/share/man/man1/sha1.1
 	ln -sf md5.1 $(DESTDIR)$(PREFIX)/share/man/man1/sha256.1
 	ln -sf md5.1 $(DESTDIR)$(PREFIX)/share/man/man1/sha512.1

@@ -11,6 +11,7 @@ Included are:
      lam — laminate files
      lndir — create a shadow directory of symbolic links to another directory
      md5 — calculate a message digest (checksum) for a file
+     rdate — set the system's date from a remote host
      rs — reshape a data array
      signify — cryptographically sign and verify files
      unvis — revert a visual representation of data back to original form

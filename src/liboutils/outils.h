@@ -11,6 +11,12 @@
 
 #define letoh16 le16toh
 
+#ifndef SA_LEN
+#define SA_LEN(X) \
+        (((struct sockaddr*)(X))->sa_family == AF_INET ? sizeof(struct sockaddr_in) : \
+         ((struct sockaddr*)(X))->sa_family == AF_INET6 ? sizeof(struct sockaddr_in6) : sizeof(struct sockaddr))
+#endif
+
 #include <stdio.h>
 #include <stdint.h>
 
