@@ -16,6 +16,7 @@ Included are:
      signify — cryptographically sign and verify files
      unvis — revert a visual representation of data back to original form
      vis — display non-printable characters in a visual format
+     what - show what versions of object modules were used to construct a file
 
                                                 Christian Neukirchen
                                               chneukirchen@gmail.com
