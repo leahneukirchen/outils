@@ -1,7 +1,7 @@
 /*
  * Holiday
  *
- * $OpenBSD: calendar.holiday,v 1.25 2013/11/26 15:25:56 sobrado Exp $
+ * $OpenBSD: calendar.holiday,v 1.27 2015/01/19 18:07:47 tedu Exp $
  */
 
 #ifndef _calendar_holiday_
@@ -32,7 +32,6 @@
 01/19	Nameday of Archbishop Makarios in Cyprus
 01/20	Army Day in Mali
 01/20	National Heroes Day in Guinea-Bissau
-01/SunThird	Martin Luther King Day in New York (3rd Sunday)
 01/MonThird	Robert E. Lee's Birthday in Alabama & Mississippi (3rd Monday)
 01/MonThird	Lee-Jackson Day in Virginia (3rd Monday)
 01/21	Our Lady of Altagracia in Dominican Republic
@@ -298,7 +297,7 @@
 08/15	Independence Day in India
 08/15	Liberation Day in South Korea
 08/15	National Day in Congo
-08/FriThird	Admission Day in Hawaii, 1984 (3rd Friday)
+08/FriThird	Admission Day in Hawaii, 1959 (3rd Friday)
 08/16	Bennington Battle Day in Vermont
 08/16	Independence Days (3 days) in Gabon
 08/16	Restoration Day in Dominican Republic
