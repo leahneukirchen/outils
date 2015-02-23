@@ -41,7 +41,7 @@ DESTDIR=
 PREFIX=/usr
 
 install: all
-	mkdir -p $(DESTDIR)$(PREFIX)/bin $(DESTDIR)$(PREFIX)/share/man/man1
+	mkdir -p $(DESTDIR)$(PREFIX)/bin $(DESTDIR)$(PREFIX)/share/man/man1 $(DESTDIR)$(PREFIX)/share/man/man8
 	install -m755 $(ALL) $(DESTDIR)$(PREFIX)/bin
 	ln -sf md5 $(DESTDIR)$(PREFIX)/bin/sha1
 	ln -sf md5 $(DESTDIR)$(PREFIX)/bin/sha256
