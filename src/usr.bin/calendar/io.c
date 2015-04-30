@@ -1,4 +1,4 @@
-/*	$OpenBSD: io.c,v 1.37 2015/01/16 06:40:06 deraadt Exp $	*/
+/*	$OpenBSD: io.c,v 1.39 2015/04/18 18:28:37 deraadt Exp $	*/
 
 /*
  * Copyright (c) 1989, 1993, 1994
@@ -44,7 +44,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <tzfile.h>
 #include <unistd.h>
 #include <limits.h>
 
@@ -282,12 +281,16 @@ getfield(char *p, char **endp, int *flags)
 			}
 		}
 		if (i > NUMEV) {
-			switch(*start) {
+			const char *errstr;
+
+			switch (*start) {
 			case '-':
 			case '+':
-				var = atoi(start);
-				if (var > 365 || var < -365)
+				var = strtonum(start + 1, 0, 365, &errstr);
+				if (errstr)
 					return (0); /* Someone is just being silly */
+				if (*start == '-')
+					var = -var;
 				val += (NUMEV + 1) * var;
 				/* We add one to the matching event and multiply by
 				 * (NUMEV + 1) so as not to return 0 if there's a match.

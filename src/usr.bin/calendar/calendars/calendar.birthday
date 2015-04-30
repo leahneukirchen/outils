@@ -1,7 +1,7 @@
 /*
  * Birthday
  *
- * $OpenBSD: calendar.birthday,v 1.58 2014/03/06 17:36:28 jmc Exp $
+ * $OpenBSD: calendar.birthday,v 1.60 2015/04/30 09:12:49 jmc Exp $
  */
 
 #ifndef _calendar_birthday_
@@ -107,6 +107,7 @@
 03/11	Robert Treat Paine born, 1731
 03/11	Vannevar Bush born, 1890
 03/12	Gustav Robert Kirchhoff born, 1824, physicist
+03/12	Terry Pratchett (Sir) dies, 2015, author
 03/14	Albert Einstein born, 1879
 03/14	Casey Jones born, 1864
 03/14	Giovanni Virginio Schiaparelli born, 1835, astronomer;
@@ -154,17 +155,17 @@
 04/15	Jean Genet died in Paris, 1986
 04/16	Charles (Charlie) Chaplin (Sir) born in London, 1889
 04/19	Andre Rene the Giant (Roussimoff) born in Grenoble, France, 1946
-04/20	Adolph Hitler born, 1889
+04/20	Adolf Hitler born, 1889
 04/22	Kant born, 1724
 04/22	Lenin born, the best friend of all the children, 1870
 04/23	Shakespeare born, 1564
 04/28	James Monroe born, 1758
 04/28	Mussolini executed, 1945
+04/28	Terry Pratchett (Sir) born, 1948, author
 04/29	Jules Henri Poincare born, 1854, founder of topology
 04/29	William Randolph Hearst born in San Francisco, 1863
 04/29	Albert Hofmann died, 2008
 04/30	Karl Friedrich Gauss born, 1777, mathematician & astronomer
-04/30	Adolph Hitler committed suicide, 1945
 05/01	Little Walter (Marion Walter Jacobs) is born in Alexandria,
 		Louisiana, 1930
 05/02	Dr. Benjamin Spock born, 1903
