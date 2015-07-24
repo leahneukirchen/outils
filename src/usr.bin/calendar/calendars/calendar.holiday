@@ -1,12 +1,13 @@
 /*
  * Holiday
  *
- * $OpenBSD: calendar.holiday,v 1.27 2015/01/19 18:07:47 tedu Exp $
+ * $OpenBSD: calendar.holiday,v 1.31 2015/05/17 06:37:36 czarkoff Exp $
  */
 
 #ifndef _calendar_holiday_
 #define _calendar_holiday_
 
+01/01	New Year's Day
 01/01	Independence Day in Haiti, Sudan
 01/01	Universal Fraternity Day in Mozambique
 01/02	Ancestry Day in Haiti
@@ -155,7 +156,7 @@
 05/04	Rhode Island Independence Day
 05/05	Children's Day in Japan, South Korea
 05/05	Coronation Day in Thailand
-05/05	Liberation Day in Netherlands
+05/05	Liberation Day in the Netherlands
 05/06	Bataan Day in Philippines
 05/06*	Bank Holiday in UK
 05/07	May Day in United Kingdom
@@ -180,6 +181,7 @@
 05/20	Mecklenburg Independence Day in North Carolina
 05/20	National Day in Cameroon
 05/Mon-2	Victoria Day in Canada
+05/21	Independence Day in Montenegro
 05/22	National Heroes Day in Sri Lanka
 05/22	Declaration of the Republic of Yemen, 1990
 05/23	Commonwealth Day in Jamaica, Belize
@@ -250,6 +252,7 @@
 07/09	Independence Day in Argentina
 07/10	Independence Day in Bahamas
 07/11	National Holiday in the Mongolian People's Republic
+07/13	Statehood Day in Montenegro
 07/14	Bastille Day
 07/14	National Holiday in Monaco
 07/15	St. Swithin's Day
@@ -449,7 +452,7 @@
 12/11	Independence Day in Upper Volta
 12/12	Independence Day in Kenya
 12/13	Republic Day in Malta
-12/15	Statue Day in Netherlands Antilles
+12/15	Kingdom Day in the Netherlands
 12/16	Constitution Day in Nepal
 12/16	Day of the Covenant in South Africa
 12/16	National Day in Bahrain
@@ -472,8 +475,8 @@
 
 04/21	Tiradentes in Brazil
 04/25	Anniversary of the Revolution in Portugal
+04/27	King's Day in the Netherlands
 04/29	Greenary day in Japan
-04/30	Queen's Birthday in Netherlands, Netherlands Antilles
 05/01	Boy's day in Japan
 05/02	King's Birthday in Lesotho
 05/05	Battle of Puebla in Mexico
