@@ -1,4 +1,4 @@
-/* $OpenBSD: signify.c,v 1.100 2015/01/16 06:16:12 tedu Exp $ */
+/* $OpenBSD: signify.c,v 1.104 2015/11/02 22:01:10 bluhm Exp $ */
 /*
  * Copyright (c) 2013 Ted Unangst <tedu@openbsd.org>
  *
@@ -72,7 +72,7 @@ struct sig {
 
 extern char *__progname;
 
-static void
+static void __dead
 usage(const char *error)
 {
 	if (error)
@@ -663,6 +663,8 @@ main(int argc, char **argv)
 		VERIFY
 	} verb = NONE;
 
+	if (pledge("stdio rpath wpath cpath tty", NULL) == -1)
+		err(1, "pledge");
 
 	rounds = 42;
 
@@ -721,6 +723,33 @@ main(int argc, char **argv)
 	}
 	argc -= optind;
 	argv += optind;
+
+	if (setvbuf(stdout, NULL, _IOLBF, 0) != 0)
+		err(1, "setvbuf");
+
+	switch (verb) {
+	case GENERATE:
+	case SIGN:
+		/* keep it all */
+		break;
+	case CHECK:
+		if (pledge("stdio rpath", NULL) == -1)
+			err(1, "pledge");
+		break;
+	case VERIFY:
+		if (embedded && (!msgfile || strcmp(msgfile, "-") != 0)) {
+			if (pledge("stdio rpath wpath cpath", NULL) == -1)
+				err(1, "pledge");
+		} else {
+			if (pledge("stdio rpath", NULL) == -1)
+				err(1, "pledge");
+		}
+		break;
+	default:
+		if (pledge("stdio", NULL) == -1)
+			err(1, "pledge");
+		break;
+	}
 
 #ifndef VERIFYONLY
 	if (verb == CHECK) {

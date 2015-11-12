@@ -1,4 +1,4 @@
-/*	$OpenBSD: jot.c,v 1.24 2015/07/21 04:04:06 jasper Exp $	*/
+/*	$OpenBSD: jot.c,v 1.26 2015/10/09 01:37:07 deraadt Exp $	*/
 /*	$NetBSD: jot.c,v 1.3 1994/12/02 20:29:43 pk Exp $	*/
 
 /*-
@@ -83,6 +83,9 @@ main(int argc, char *argv[])
 	int		n = 0;
 	int		ch;
 	const	char	*errstr;
+
+	if (pledge("stdio", NULL) == -1)
+		err(1, "pledge");
 
 	while ((ch = getopt(argc, argv, "rb:w:cs:np:")) != -1)
 		switch (ch) {

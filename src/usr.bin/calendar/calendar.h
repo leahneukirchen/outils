@@ -29,6 +29,8 @@
  * SUCH DAMAGE.
  */
 
+#include <sys/types.h>
+#include <time.h>
 
 extern struct passwd *pw;
 extern int doall;
