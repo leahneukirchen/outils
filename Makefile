@@ -1,6 +1,6 @@
 CFLAGS=-Wall -O2
 CPPFLAGS=-include src/liboutils/outils.h -isystem src/liboutils/include -Isrc/bin/md5 -D_GNU_SOURCE -D_DEFAULT_SOURCE -DNO_UTIL
-LDFLAGS=-Wl,--as-needed -lcrypto
+LDFLAGS=-Wl,--as-needed -lcrypto -lm
 
 %: %.o
 	$(CC) -o $@ $^ $(LDFLAGS)
@@ -10,7 +10,7 @@ all: $(ALL)
 
 src/usr.bin/apply/apply: src/usr.bin/apply/apply.o src/liboutils/pledge.o src/liboutils/strlcpy.o
 
-src/usr.bin/jot/jot: src/usr.bin/jot/jot.o src/liboutils/strlcpy.o src/liboutils/strlcat.o src/liboutils/strtonum.o src/liboutils/arc4random.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o src/liboutils/pledge.o src/liboutils/sha512.o src/liboutils/mem_clr.o
+src/usr.bin/jot/jot: src/usr.bin/jot/jot.o src/liboutils/strlcpy.o src/liboutils/strlcat.o src/liboutils/strtonum.o src/liboutils/arc4random.o src/liboutils/arc4random_uniform.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o src/liboutils/pledge.o src/liboutils/sha512.o src/liboutils/mem_clr.o
 
 src/usr.bin/lam/lam: src/usr.bin/lam/lam.o src/liboutils/pledge.o src/liboutils/strlcpy.o
 
@@ -18,11 +18,11 @@ src/usr.bin/lndir/lndir: src/usr.bin/lndir/lndir.o src/liboutils/pledge.o src/li
 
 src/bin/md5/md5: src/bin/md5/md5.o src/bin/md5/crc.o src/liboutils/sha512.o src/liboutils/mem_clr.o src/liboutils/explicit_bzero.o src/liboutils/md5.o src/liboutils/pledge.o src/liboutils/rmd160.o src/liboutils/sha1.o src/liboutils/sha2.o src/liboutils/fgetln.o src/liboutils/base64.o src/liboutils/md5hl.o src/liboutils/rmd160hl.o src/liboutils/sha1hl.o src/liboutils/sha224hl.o src/liboutils/sha256hl.o src/liboutils/sha384hl.o src/liboutils/sha512hl.o
 
-src/usr.bin/rs/rs: src/usr.bin/rs/rs.o src/liboutils/pledge.o src/liboutils/strtonum.o src/liboutils/reallocarray.c
+src/usr.bin/rs/rs: src/usr.bin/rs/rs.o src/usr.bin/rs/utf8.o src/liboutils/pledge.o src/liboutils/strtonum.o src/liboutils/reallocarray.c
 
 src/usr.bin/signify/signify: src/usr.bin/signify/signify.o src/usr.bin/signify/crypto_api.o src/usr.bin/signify/fe25519.o src/usr.bin/signify/mod_ed25519.o src/usr.bin/signify/mod_ge25519.o src/usr.bin/signify/sc25519.o src/usr.bin/signify/smult_curve25519_ref.o src/liboutils/pledge.o src/liboutils/strlcpy.o src/liboutils/base64.o src/liboutils/explicit_bzero.o src/liboutils/ohash.o src/liboutils/arc4random.o src/liboutils/getentropy_linux.o src/liboutils/readpassphrase.o src/liboutils/sha2.o src/liboutils/sha256hl.o src/liboutils/sha512hl.o src/liboutils/timingsafe_bcmp.o src/liboutils/bcrypt_pbkdf.o src/liboutils/blowfish.o
 
-src/usr.bin/calendar/calendar: src/usr.bin/calendar/calendar.o src/usr.bin/calendar/day.o src/usr.bin/calendar/io.o src/usr.bin/calendar/ostern.o src/usr.bin/calendar/paskha.o src/usr.bin/calendar/pesach.o src/liboutils/arc4random_uniform.o src/liboutils/arc4random.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o src/liboutils/sha2.o src/liboutils/strtonum.o
+src/usr.bin/calendar/calendar: src/usr.bin/calendar/calendar.o src/usr.bin/calendar/day.o src/usr.bin/calendar/io.o src/usr.bin/calendar/ostern.o src/usr.bin/calendar/paskha.o src/usr.bin/calendar/pesach.o src/liboutils/arc4random_uniform.o src/liboutils/arc4random.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o src/liboutils/pledge.o src/liboutils/sha2.o src/liboutils/strtonum.o
 
 src/usr.bin/gzsig/gzsig: src/usr.bin/gzsig/gzsig.o src/usr.bin/gzsig/key.o src/usr.bin/gzsig/sign.o src/usr.bin/gzsig/ssh.o src/usr.bin/gzsig/ssh2.o src/usr.bin/gzsig/util.o src/usr.bin/gzsig/verify.o src/usr.bin/gzsig/x509.o src/liboutils/strlcpy.o src/liboutils/base64.o src/liboutils/sha1.o
 

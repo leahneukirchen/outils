@@ -1,4 +1,4 @@
-/*	$OpenBSD: calendar.c,v 1.32 2015/10/23 11:43:16 zhuk Exp $	*/
+/*	$OpenBSD: calendar.c,v 1.35 2015/12/07 18:46:35 espie Exp $	*/
 
 /*
  * Copyright (c) 1989, 1993, 1994
@@ -53,6 +53,7 @@ char *calendarNoMail = "nomail";  /* don't sent mail if this file exists */
 
 struct passwd *pw;
 int doall = 0;
+int daynames = 0;
 time_t f_time = 0;
 int bodun_always = 0;
 
@@ -73,7 +74,7 @@ main(int argc, char *argv[])
 
 	(void)setlocale(LC_ALL, "");
 
-	while ((ch = getopt(argc, argv, "abf:t:A:B:-")) != -1)
+	while ((ch = getopt(argc, argv, "abwf:t:A:B:-")) != -1)
 		switch (ch) {
 		case '-':		/* backward contemptible */
 		case 'a':
@@ -108,6 +109,10 @@ main(int argc, char *argv[])
 				errx(1, "-B %s: %s", optarg, errstr);
 			break;
 
+		case 'w':
+			daynames = 1;
+			break;
+
 		default:
 			usage();
 		}
@@ -116,6 +121,15 @@ main(int argc, char *argv[])
 
 	if (argc)
 		usage();
+
+	if (doall) {
+		if (pledge("stdio rpath tmppath fattr getpw id proc exec", NULL)
+		    == -1)
+			err(1, "pledge");
+	} else {
+		if (pledge("stdio rpath proc exec", NULL) == -1)
+			err(1, "pledge");
+	}
 
 	/* use current time */
 	if (f_time <= 0)
@@ -249,7 +263,7 @@ void
 usage(void)
 {
 	(void)fprintf(stderr,
-	    "usage: calendar [-ab] [-A num] [-B num] [-f calendarfile] "
+	    "usage: calendar [-abw] [-A num] [-B num] [-f calendarfile] "
 	    "[-t [[[cc]yy]mm]dd]\n");
 	exit(1);
 }

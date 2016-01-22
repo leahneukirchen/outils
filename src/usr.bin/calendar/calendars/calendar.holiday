@@ -1,7 +1,7 @@
 /*
  * Holiday
  *
- * $OpenBSD: calendar.holiday,v 1.32 2015/10/12 06:33:21 jmc Exp $
+ * $OpenBSD: calendar.holiday,v 1.35 2016/01/20 19:12:28 jmc Exp $
  */
 
 #ifndef _calendar_holiday_
@@ -12,7 +12,6 @@
 01/01	Universal Fraternity Day in Mozambique
 01/02	Ancestry Day in Haiti
 01/02	St. Berchtold's Day in Switzerland
-01/03	New Year's Holiday in Scotland
 01/03	Revolution Day in Upper Volta
 01/04	Independence Day in Burma
 01/04	Martyrs Day in Zaire
@@ -45,7 +44,6 @@
 02/02	Candlemas
 02/04	Independence Commemoration Day in Sri Lanka
 02/05	Constitution Day in Mexico
-02/06	New Zealand Day
 02/07	Independence Day in Grenada
 02/08	Preseren Day (Cultural Holiday) in Slovenia
 02/09	St. Maron's Day in Lebanon
@@ -138,7 +136,7 @@
 04/22	Oklahoma Day in Oklahoma
 04/24	Victory Day in Togo
 04/24*	Pesach - First Day of Passover - Festival of Freedom
-04/25	Anzac Day in Australia, New Zealand, Tonga, Western Samoa
+04/25*	ANZAC Day in Australia, New Zealand, and various other influenced places
 04/25	Liberation Day in Italy
 04/25	National Flag Day in Swaziland
 04/26	Confederate Memorial Day in Florida & Georgia
@@ -285,7 +283,6 @@
 08/03	Independence Day in Jamaica, Niger
 08/03	Memorial Day of Archbishop Makarios in Cyprus
 08/04	Freedom Day in Guyana
-08/05*	Bank Holiday in Scotland and Northern Ireland
 08/06	Bank Holiday in Australia, British Columbia, Fiji, Iceland, Ireland,
 	Ontario
 08/06	Emancipation Day in Bahamas
@@ -393,7 +390,6 @@
 10/23	Chulalongkron's Day in Thailand
 10/24	Independence Day in Zambia
 10/24	United Nations Day
-10/25	Labor Day in New Zealand
 10/25	Taiwan Restoration Day in Taiwan
 10/26	Agam Day in Nauru
 10/26	Armed Forces Day in Benin, Rwanda
@@ -435,7 +431,7 @@
 11/30	Independence Day in Barbados, People's Democratic Yemen Republic
 11/30	National Day in Benin
 11/30	National Heroes Day in Philippines
-11/30	St. Andrew's Day
+11/30	Saint Andrew's Day (also a bank holiday in Scotland)
 12/01	Independence Day in Central African Republic
 12/01	World AIDS Day
 12/01	National Day in Romania
@@ -490,7 +486,6 @@
 06/02	Corpus Christi in Paraguay
 06/MonFirst	Jefferson Davis's Birthday in Alabama & Mississippi (1st Monday)
 06/MonFirst	Jefferson Davis's Birthday in Florida, Georgia, & S. Carolina
-06/04	Queen's Birthday in New Zealand
 06/06	His Majesty, Yang Di-Pertuan Agong's Birthday in Malaysia
 06/11	Queen's Birthday
 06/12	Peace with Bolivia in Paraguay
