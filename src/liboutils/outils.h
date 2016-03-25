@@ -19,6 +19,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <sys/types.h>
 
 char *fgetln(FILE *, size_t *);
 size_t strlcpy(char *, const char *, size_t);
