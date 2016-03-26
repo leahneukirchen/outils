@@ -1,9 +1,10 @@
-CFLAGS=-Wall -O2
+CFLAGS?=-Wall -O2
 CPPFLAGS=-include src/liboutils/outils.h -isystem src/liboutils/include -Isrc/bin/md5 -D_GNU_SOURCE -D_DEFAULT_SOURCE -DNO_UTIL
-LDFLAGS=-Wl,--as-needed -lcrypto -lm
+LDFLAGS=-Wl,--as-needed
+LIBS=-lcrypto -lm
 
 %: %.o
-	$(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS)
 
 ALL=src/usr.bin/apply/apply src/usr.bin/jot/jot src/usr.bin/lam/lam src/usr.bin/lndir/lndir src/bin/md5/md5 src/usr.bin/rs/rs src/usr.bin/gzsig/gzsig src/usr.bin/signify/signify src/usr.bin/calendar/calendar src/usr.bin/vis/vis src/usr.bin/unvis/unvis src/usr.bin/what/what src/usr.sbin/rdate/rdate 
 all: $(ALL)
