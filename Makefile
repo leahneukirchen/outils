@@ -1,17 +1,19 @@
 CFLAGS?=-Wall -O2
 CPPFLAGS=-include src/liboutils/outils.h -isystem src/liboutils/include -Isrc/bin/md5 -D_GNU_SOURCE -D_DEFAULT_SOURCE -DNO_UTIL
 LDFLAGS=-Wl,--as-needed
-LIBS=-lcrypto -lm
-
-%: %.o
-	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS)
+LIBS=-lm
 
 ALL=src/usr.bin/apply/apply src/usr.bin/jot/jot src/usr.bin/lam/lam src/usr.bin/lndir/lndir src/bin/md5/md5 src/usr.bin/rs/rs src/usr.bin/gzsig/gzsig src/usr.bin/signify/signify src/usr.bin/calendar/calendar src/usr.bin/vis/vis src/usr.bin/unvis/unvis src/usr.bin/what/what src/usr.sbin/rdate/rdate 
 all: $(ALL)
 
+%: %.o
+	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS)
+src/usr.bin/gzsig/gzsig:
+	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS) -lcrypto
+
 src/usr.bin/apply/apply: src/usr.bin/apply/apply.o src/liboutils/pledge.o src/liboutils/strlcpy.o
 
-src/usr.bin/jot/jot: src/usr.bin/jot/jot.o src/liboutils/strlcpy.o src/liboutils/strlcat.o src/liboutils/strtonum.o src/liboutils/arc4random.o src/liboutils/arc4random_uniform.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o src/liboutils/pledge.o src/liboutils/sha512.o src/liboutils/mem_clr.o
+src/usr.bin/jot/jot: src/usr.bin/jot/jot.o src/liboutils/strlcpy.o src/liboutils/strlcat.o src/liboutils/strtonum.o src/liboutils/arc4random.o src/liboutils/arc4random_uniform.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o src/liboutils/pledge.o src/liboutils/sha2.o src/liboutils/mem_clr.o
 
 src/usr.bin/lam/lam: src/usr.bin/lam/lam.o src/liboutils/pledge.o src/liboutils/strlcpy.o
 
@@ -33,7 +35,7 @@ src/usr.bin/unvis/unvis: src/usr.bin/unvis/unvis.o src/liboutils/pledge.o src/li
 
 src/usr.bin/what/what: src/usr.bin/what/what.o src/liboutils/pledge.o src/liboutils/strlcpy.o
 
-src/usr.sbin/rdate/rdate: src/usr.sbin/rdate/ntp.o src/usr.sbin/rdate/rfc868time.o src/usr.sbin/rdate/rdate.o src/usr.sbin/rdate/ntpleaps.o src/liboutils/arc4random.o src/liboutils/reallocarray.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o
+src/usr.sbin/rdate/rdate: src/usr.sbin/rdate/ntp.o src/usr.sbin/rdate/rfc868time.o src/usr.sbin/rdate/rdate.o src/usr.sbin/rdate/ntpleaps.o src/liboutils/arc4random.o src/liboutils/reallocarray.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o src/liboutils/sha2.o
 
 clean:
 	rm -f src/*/*/*.o

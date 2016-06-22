@@ -1,5 +1,5 @@
 This is outils, a port of some non-standard OpenBSD tools to Linux.
-You need OpenSSL/LibreSSL to build it.
+You need OpenSSL/LibreSSL to build gzsig.
 
 Included are:
 
