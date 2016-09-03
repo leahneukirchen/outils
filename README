@@ -1,12 +1,10 @@
 This is outils, a port of some non-standard OpenBSD tools to Linux.
-You need OpenSSL/LibreSSL to build gzsig.
 
 Included are:
 
      apply — apply a command to a set of arguments
      calendar — reminder service
      cksum — display file checksums and block counts
-     gzsig — gzip signing utility
      jot — print sequential or random data
      lam — laminate files
      lndir — create a shadow directory of symbolic links to another directory
