@@ -21,7 +21,7 @@ src/bin/md5/md5: src/bin/md5/md5.o src/bin/md5/crc.o src/liboutils/sha512.o src/
 
 src/usr.bin/rs/rs: src/usr.bin/rs/rs.o src/usr.bin/rs/utf8.o src/liboutils/pledge.o src/liboutils/strtonum.o src/liboutils/reallocarray.o
 
-src/usr.bin/signify/signify: src/usr.bin/signify/signify.o src/usr.bin/signify/crypto_api.o src/usr.bin/signify/fe25519.o src/usr.bin/signify/mod_ed25519.o src/usr.bin/signify/mod_ge25519.o src/usr.bin/signify/sc25519.o src/usr.bin/signify/smult_curve25519_ref.o src/usr.bin/signify/zsig.o src/liboutils/pledge.o src/liboutils/strlcpy.o src/liboutils/base64.o src/liboutils/explicit_bzero.o src/liboutils/ohash.o src/liboutils/arc4random.o src/liboutils/getentropy_linux.o src/liboutils/readpassphrase.o src/liboutils/sha2.o src/liboutils/sha256hl.o src/liboutils/sha384hl.o src/liboutils/sha512hl.o src/liboutils/timingsafe_bcmp.o src/liboutils/bcrypt_pbkdf.o src/liboutils/blowfish.o
+src/usr.bin/signify/signify: src/usr.bin/signify/signify.o src/usr.bin/signify/crypto_api.o src/usr.bin/signify/fe25519.o src/usr.bin/signify/mod_ed25519.o src/usr.bin/signify/mod_ge25519.o src/usr.bin/signify/sc25519.o src/usr.bin/signify/smult_curve25519_ref.o src/usr.bin/signify/zsig.o src/liboutils/pledge.o src/liboutils/strlcpy.o src/liboutils/base64.o src/liboutils/explicit_bzero.o src/liboutils/ohash.o src/liboutils/arc4random.o src/liboutils/getentropy_linux.o src/liboutils/readpassphrase.o src/liboutils/sha2.o src/liboutils/sha256hl.o src/liboutils/sha512_256hl.o src/liboutils/sha512hl.o src/liboutils/timingsafe_bcmp.o src/liboutils/bcrypt_pbkdf.o src/liboutils/blowfish.o
 
 src/usr.bin/calendar/calendar: src/usr.bin/calendar/calendar.o src/usr.bin/calendar/day.o src/usr.bin/calendar/io.o src/usr.bin/calendar/ostern.o src/usr.bin/calendar/paskha.o src/usr.bin/calendar/pesach.o src/liboutils/arc4random_uniform.o src/liboutils/arc4random.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o src/liboutils/pledge.o src/liboutils/sha2.o src/liboutils/strtonum.o
 
@@ -34,7 +34,7 @@ src/usr.bin/what/what: src/usr.bin/what/what.o src/liboutils/pledge.o src/libout
 src/usr.sbin/rdate/rdate: src/usr.sbin/rdate/ntp.o src/usr.sbin/rdate/rfc868time.o src/usr.sbin/rdate/rdate.o src/usr.sbin/rdate/ntpleaps.o src/liboutils/arc4random.o src/liboutils/reallocarray.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o src/liboutils/sha2.o
 
 clean:
-	rm -f src/*/*/*.o
+	rm -f src/*/*.o src/*/*/*.o
 
 DESTDIR=
 PREFIX=/usr

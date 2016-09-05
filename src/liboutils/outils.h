@@ -1,4 +1,8 @@
+#define DEF_WEAK(x)
+
 #define __weak_alias(new, old) \
+        extern __typeof(old) new __attribute__((weak, alias(#old)))
+#define MAKE_CLONE(new, old) \
         extern __typeof(old) new __attribute__((weak, alias(#old)))
 #define __dead __attribute__((__noreturn__))
 #define __BEGIN_DECLS
@@ -33,4 +37,4 @@ int timingsafe_bcmp(const void *, const void *, size_t);
 void *reallocarray(void *, size_t, size_t);
 int pledge(const char *, const char **);
 void explicit_bzero(void *buf, size_t len);
-
+int getentropy(void *buf, size_t len);
