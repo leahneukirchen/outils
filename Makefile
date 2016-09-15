@@ -11,13 +11,13 @@ all: $(ALL)
 
 src/usr.bin/apply/apply: src/usr.bin/apply/apply.o src/liboutils/pledge.o src/liboutils/strlcpy.o
 
-src/usr.bin/jot/jot: src/usr.bin/jot/jot.o src/liboutils/strlcpy.o src/liboutils/strlcat.o src/liboutils/strtonum.o src/liboutils/arc4random.o src/liboutils/arc4random_uniform.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o src/liboutils/pledge.o src/liboutils/sha2.o src/liboutils/mem_clr.o
+src/usr.bin/jot/jot: src/usr.bin/jot/jot.o src/liboutils/strlcpy.o src/liboutils/strlcat.o src/liboutils/strtonum.o src/liboutils/arc4random.o src/liboutils/arc4random_uniform.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o src/liboutils/pledge.o src/liboutils/sha2.o
 
 src/usr.bin/lam/lam: src/usr.bin/lam/lam.o src/liboutils/pledge.o src/liboutils/strlcpy.o
 
 src/usr.bin/lndir/lndir: src/usr.bin/lndir/lndir.o src/liboutils/pledge.o src/liboutils/strlcpy.o src/liboutils/strlcat.o src/liboutils/errc.o src/liboutils/verrc.o
 
-src/bin/md5/md5: src/bin/md5/md5.o src/bin/md5/crc.o src/liboutils/sha512.o src/liboutils/mem_clr.o src/liboutils/explicit_bzero.o src/liboutils/md5.o src/liboutils/pledge.o src/liboutils/rmd160.o src/liboutils/sha1.o src/liboutils/sha2.o src/liboutils/fgetln.o src/liboutils/base64.o src/liboutils/md5hl.o src/liboutils/rmd160hl.o src/liboutils/sha1hl.o src/liboutils/sha224hl.o src/liboutils/sha256hl.o src/liboutils/sha384hl.o src/liboutils/sha512hl.o
+src/bin/md5/md5: src/bin/md5/md5.o src/bin/md5/crc.o src/liboutils/explicit_bzero.o src/liboutils/md5.o src/liboutils/pledge.o src/liboutils/rmd160.o src/liboutils/sha1.o src/liboutils/sha2.o src/liboutils/fgetln.o src/liboutils/base64.o src/liboutils/md5hl.o src/liboutils/rmd160hl.o src/liboutils/sha1hl.o src/liboutils/sha224hl.o src/liboutils/sha256hl.o src/liboutils/sha384hl.o src/liboutils/sha512hl.o
 
 src/usr.bin/rs/rs: src/usr.bin/rs/rs.o src/usr.bin/rs/utf8.o src/liboutils/pledge.o src/liboutils/strtonum.o src/liboutils/reallocarray.o
 
