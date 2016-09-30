@@ -1,4 +1,4 @@
-/* $OpenBSD: signify.c,v 1.118 2016/09/10 12:23:16 deraadt Exp $ */
+/* $OpenBSD: signify.c,v 1.122 2016/09/27 02:13:27 tedu Exp $ */
 /*
  * Copyright (c) 2013 Ted Unangst <tedu@openbsd.org>
  *
@@ -363,8 +363,14 @@ createsig(const char *seckeyfile, const char *msgfile, uint8_t *msg,
 
 	secname = strstr(seckeyfile, ".sec");
 	if (secname && strlen(secname) == 4) {
+		const char *keyname;
+		/* basename may or may not modify input */
+		if (!(keyname = strrchr(seckeyfile, '/')))
+			keyname = seckeyfile;
+		else
+			keyname++;
 		if ((nr = snprintf(sigcomment, sizeof(sigcomment), VERIFYWITH "%.*s.pub",
-		    (int)strlen(seckeyfile) - 4, seckeyfile)) == -1 || nr >= sizeof(sigcomment))
+		    (int)strlen(keyname) - 4, keyname)) == -1 || nr >= sizeof(sigcomment))
 			errx(1, "comment too long");
 	} else {
 		if ((nr = snprintf(sigcomment, sizeof(sigcomment), "signature from %s",
@@ -445,44 +451,43 @@ verifymsg(struct pubkey *pubkey, uint8_t *msg, unsigned long long msglen,
 	free(dummybuf);
 }
 
-#ifndef VERIFYONLY
 static void
 check_keytype(const char *pubkeyfile, const char *keytype)
 {
-	size_t len;
-	char *cmp;
-	int slen;
+	const char *p;
+	size_t typelen;
 
-	len = strlen(pubkeyfile);
-	slen = asprintf(&cmp, "-%s.pub", keytype);
-	if (slen < 0)
-		err(1, "asprintf error");
-	if (len < slen)
-		errx(1, "too short");
+	if (!(p = strrchr(pubkeyfile, '-')))
+		goto bad;
+	p++;
+	typelen = strlen(keytype);
+	if (strncmp(p, keytype, typelen) != 0)
+		goto bad;
+	if (strcmp(p + typelen, ".pub") != 0)
+		goto bad;
+	return;
 
-	if (strcmp(pubkeyfile + len - slen, cmp) != 0)
-		errx(1, "wrong keytype");
-	free(cmp);
+bad:
+	errx(1, "incorrect keytype: %s is not %s", pubkeyfile, keytype);
 }
-#endif
 
 static void
 readpubkey(const char *pubkeyfile, struct pubkey *pubkey,
     const char *sigcomment, const char *keytype)
 {
-	const char *safepath = "/etc/signify/";
+	const char *safepath = "/etc/signify";
+	char keypath[1024];
 
 	if (!pubkeyfile) {
 		pubkeyfile = strstr(sigcomment, VERIFYWITH);
-		if (pubkeyfile) {
+		if (pubkeyfile && strchr(pubkeyfile, '/') == NULL) {
 			pubkeyfile += strlen(VERIFYWITH);
-			if (strncmp(pubkeyfile, safepath, strlen(safepath)) != 0 ||
-			    strstr(pubkeyfile, "/../") != NULL)
-				errx(1, "untrusted path %s", pubkeyfile);
-#ifndef VERIFYONLY
 			if (keytype)
 				check_keytype(pubkeyfile, keytype);
-#endif
+			if (snprintf(keypath, sizeof(keypath), "%s/%s",
+			    safepath, pubkeyfile) >= sizeof(keypath))
+				errx(1, "name too long %s", pubkeyfile);
+			pubkeyfile = keypath;
 		} else
 			usage("must specify pubkey");
 	}
