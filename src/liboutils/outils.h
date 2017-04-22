@@ -38,3 +38,5 @@ void *reallocarray(void *, size_t, size_t);
 int pledge(const char *, const char **);
 void explicit_bzero(void *buf, size_t len);
 int getentropy(void *buf, size_t len);
+void freezero(void *ptr, size_t size);
+
