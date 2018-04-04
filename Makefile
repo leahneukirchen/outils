@@ -9,7 +9,7 @@ all: $(ALL)
 %: %.o
 	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS)
 
-src/usr.bin/apply/apply: src/usr.bin/apply/apply.o src/liboutils/pledge.o src/liboutils/strlcpy.o
+src/usr.bin/apply/apply: src/usr.bin/apply/apply.o src/liboutils/pledge.o src/liboutils/strlcat.o src/liboutils/strlcpy.o
 
 src/usr.bin/jot/jot: src/usr.bin/jot/jot.o src/liboutils/strlcpy.o src/liboutils/strlcat.o src/liboutils/strtonum.o src/liboutils/arc4random.o src/liboutils/arc4random_uniform.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o src/liboutils/pledge.o src/liboutils/sha2.o
 
