@@ -1,5 +1,5 @@
 CFLAGS?=-Wall -O2
-CPPFLAGS=-include src/liboutils/outils.h -isystem src/liboutils/include -Isrc/bin/md5 -D_GNU_SOURCE -D_DEFAULT_SOURCE -DNO_UTIL -D_PATH_INCLUDE="\"$(PREFIX)/share/calendar\""
+CPPFLAGS=-include src/liboutils/outils.h -isystem src/liboutils/include -Isrc/bin/md5 -D_GNU_SOURCE -D_DEFAULT_SOURCE -DNO_UTIL -D_PATH_INCLUDE="\"-I$(PREFIX)/share/calendar\""
 LDFLAGS=-Wl,--as-needed
 LIBS=-lm
 
