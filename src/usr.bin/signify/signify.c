@@ -1,4 +1,4 @@
-/* $OpenBSD: signify.c,v 1.131 2019/03/23 07:10:06 tedu Exp $ */
+/* $OpenBSD: signify.c,v 1.132 2019/07/03 03:24:02 deraadt Exp $ */
 /*
  * Copyright (c) 2013 Ted Unangst <tedu@openbsd.org>
  *
@@ -332,7 +332,7 @@ generate(const char *pubkeyfile, const char *seckeyfile, int rounds,
 	explicit_bzero(xorkey, sizeof(xorkey));
 
 	nr = snprintf(commentbuf, sizeof(commentbuf), "%s secret key", comment);
-	if (nr == -1 || nr >= sizeof(commentbuf))
+	if (nr < 0 || nr >= sizeof(commentbuf))
 		errx(1, "comment too long");
 	writekeyfile(seckeyfile, commentbuf, &enckey,
 	    sizeof(enckey), O_EXCL, 0600);
@@ -341,7 +341,7 @@ generate(const char *pubkeyfile, const char *seckeyfile, int rounds,
 	memcpy(pubkey.pkalg, PKALG, 2);
 	memcpy(pubkey.keynum, keynum, KEYNUMLEN);
 	nr = snprintf(commentbuf, sizeof(commentbuf), "%s public key", comment);
-	if (nr == -1 || nr >= sizeof(commentbuf))
+	if (nr < 0 || nr >= sizeof(commentbuf))
 		errx(1, "comment too long");
 	writekeyfile(pubkeyfile, commentbuf, &pubkey,
 	    sizeof(pubkey), O_EXCL, 0666);
@@ -871,7 +871,7 @@ main(int argc, char **argv)
 			usage("must specify sigfile with - message");
 		nr = snprintf(sigfilebuf, sizeof(sigfilebuf),
 		    "%s.sig", msgfile);
-		if (nr == -1 || nr >= sizeof(sigfilebuf))
+		if (nr < 0 || nr >= sizeof(sigfilebuf))
 			errx(1, "path too long");
 		sigfile = sigfilebuf;
 	}
