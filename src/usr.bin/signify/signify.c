@@ -1,4 +1,4 @@
-/* $OpenBSD: signify.c,v 1.132 2019/07/03 03:24:02 deraadt Exp $ */
+/* $OpenBSD: signify.c,v 1.134 2019/12/22 06:37:25 espie Exp $ */
 /*
  * Copyright (c) 2013 Ted Unangst <tedu@openbsd.org>
  *
@@ -147,6 +147,8 @@ parseb64file(const char *filename, char *b64, void *buf, size_t buflen,
 		errx(1, "unable to parse %s", filename);
 	if (memcmp(buf, PKALG, 2) != 0)
 		errx(1, "unsupported file %s", filename);
+	*commentend = '\n';
+	*b64end = '\n';
 	return b64end - b64 + 1;
 }
 
@@ -517,7 +519,7 @@ readpubkey(const char *pubkeyfile, struct pubkey *pubkey,
     const char *sigcomment, const char *keytype)
 {
 	const char *safepath = "/etc/signify";
-	char keypath[1024];
+	char keypath[PATH_MAX];
 
 	if (!pubkeyfile) {
 		pubkeyfile = strstr(sigcomment, VERIFYWITH);
