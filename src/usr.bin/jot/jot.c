@@ -90,7 +90,7 @@ main(int argc, char *argv[])
 	if (pledge("stdio", NULL) == -1)
 		err(1, "pledge");
 
-	while ((ch = getopt(argc, argv, "b:cnp:rs:w:")) != -1) {
+	while ((ch = getopt(argc, argv, "+b:cnp:rs:w:")) != -1) {
 		switch (ch) {
 		case 'b':
 			boring = true;
