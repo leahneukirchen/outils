@@ -164,6 +164,8 @@ main(int argc, char *argv[])
 				prec = 0;
 		}
 	case 0:
+		if (prec == -1)
+			prec = 0;
 		break;
 	default:
 		errx(1, "Too many arguments.  What do you mean by %s?",
