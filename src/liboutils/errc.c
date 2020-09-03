@@ -31,6 +31,8 @@
 #include <err.h>
 #include <stdarg.h>
 
+__dead void _verrc(int, int, const char *, va_list);
+
 __dead void
 _errc(int eval, int code, const char *fmt, ...)
 {
