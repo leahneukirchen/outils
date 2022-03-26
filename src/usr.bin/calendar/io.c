@@ -1,4 +1,4 @@
-/*	$OpenBSD: io.c,v 1.49 2019/06/28 13:35:00 deraadt Exp $	*/
+/*	$OpenBSD: io.c,v 1.51 2021/12/07 14:00:33 robert Exp $	*/
 
 /*
  * Copyright (c) 1989, 1993, 1994
@@ -355,14 +355,14 @@ opencal(void)
 		 */
 		if (doall) {
 			int fderr;
-			fderr = open(_PATH_DEVNULL, O_WRONLY, 0);
+			fderr = open(_PATH_DEVNULL, O_WRONLY);
 			if (fderr == -1)
 				_exit(0);
 			(void)dup2(fderr, STDERR_FILENO);
 			(void)close(fderr);
 		}
 		execl(_PATH_CPP, "cpp", "-traditional", "-undef", "-U__GNUC__",
-		    "-P", "-I.", _PATH_INCLUDE, (char *)NULL);
+		    "-P", "-I.", "-w", _PATH_INCLUDE, (char *)NULL);
 		warn(_PATH_CPP);
 		_exit(1);
 	}
