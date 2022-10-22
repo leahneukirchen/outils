@@ -1,9 +1,9 @@
 #define DEF_WEAK(x)
 
 #define __weak_alias(new, old) \
-        extern __typeof(old) new __attribute__((weak, alias(#old)))
+	extern __typeof(old) new __attribute__((weak, alias(#old)))
 #define MAKE_CLONE(new, old) \
-        extern __typeof(old) new __attribute__((weak, alias(#old)))
+	extern __typeof(old) new __attribute__((weak, alias(#old)))
 #define __dead __attribute__((__noreturn__))
 #define __BEGIN_DECLS
 #define __END_DECLS
@@ -17,9 +17,33 @@
 
 #ifndef SA_LEN
 #define SA_LEN(X) \
-        (((struct sockaddr*)(X))->sa_family == AF_INET ? sizeof(struct sockaddr_in) : \
-         ((struct sockaddr*)(X))->sa_family == AF_INET6 ? sizeof(struct sockaddr_in6) : sizeof(struct sockaddr))
+	(((struct sockaddr*)(X))->sa_family == AF_INET ? sizeof(struct sockaddr_in) : \
+	 ((struct sockaddr*)(X))->sa_family == AF_INET6 ? sizeof(struct sockaddr_in6) : sizeof(struct sockaddr))
 #endif
+
+#ifndef timespecadd
+#define timespecadd(tsp, usp, vsp)					\
+	do {								\
+		(vsp)->tv_sec = (tsp)->tv_sec + (usp)->tv_sec;		\
+		(vsp)->tv_nsec = (tsp)->tv_nsec + (usp)->tv_nsec;	\
+		if ((vsp)->tv_nsec >= 1000000000L) {			\
+			(vsp)->tv_sec++;				\
+			(vsp)->tv_nsec -= 1000000000L;			\
+		}							\
+	} while (0)
+#endif
+#ifndef timespecsub
+#define timespecsub(tsp, usp, vsp)					\
+	do {								\
+		(vsp)->tv_sec = (tsp)->tv_sec - (usp)->tv_sec;		\
+		(vsp)->tv_nsec = (tsp)->tv_nsec - (usp)->tv_nsec;	\
+		if ((vsp)->tv_nsec < 0) {				\
+			(vsp)->tv_sec--;				\
+			(vsp)->tv_nsec += 1000000000L;			\
+		}							\
+	} while (0)
+#endif
+
 
 #include <stdio.h>
 #include <stdint.h>

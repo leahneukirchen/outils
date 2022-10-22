@@ -131,10 +131,12 @@ main(int argc, char *argv[])
 	return 0;
 }
 
+extern char *__progname;
+
 static void __dead
 usage(void)
 {
-	fprintf(stderr, "usage: %s [-i | -s] [-m] [format]\n", getprogname());
+	fprintf(stderr, "usage: %s [-i | -s] [-m] [format]\n", __progname);
 	exit(1);
 }
 
