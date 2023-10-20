@@ -12,6 +12,7 @@ Included are:
      rdate — set the system's date from a remote host
      rs — reshape a data array
      signify — cryptographically sign and verify files
+     ts – timestamp input
      unvis — revert a visual representation of data back to original form
      vis — display non-printable characters in a visual format
      what - show what versions of object modules were used to construct a file
