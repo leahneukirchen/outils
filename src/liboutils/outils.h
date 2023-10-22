@@ -1,5 +1,4 @@
 #define DEF_WEAK(x)
-
 #define __weak_alias(new, old) \
 	extern __typeof(old) new __attribute__((weak, alias(#old)))
 #define MAKE_CLONE(new, old) \
@@ -59,8 +58,9 @@ uint32_t arc4random_uniform(uint32_t);
 void arc4random_buf(void *, size_t);
 int timingsafe_bcmp(const void *, const void *, size_t);
 void *reallocarray(void *, size_t, size_t);
+void *recallocarray(void *, size_t, size_t, size_t);
 int pledge(const char *, const char **);
 void explicit_bzero(void *buf, size_t len);
 int getentropy(void *buf, size_t len);
 void freezero(void *ptr, size_t size);
-
+int b64_ntop(u_char const *, size_t, char *, size_t);
