@@ -45,6 +45,7 @@
 #include <limits.h>
 #include <string.h>
 #include <unistd.h>
+#include <util.h>
 
 #define	BIGBUFSIZ	5 * BUFSIZ
 

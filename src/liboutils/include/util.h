@@ -10,4 +10,5 @@ int	RAND_bytes(unsigned char *, int);
 int	b64_ntop(u_char const *, size_t, char *, size_t);
 int	b64_pton(char const *, u_char *target, size_t);
 void *	reallocarray(void *, size_t, size_t);
+void *	recallocarray(void *, size_t, size_t, size_t);
 
