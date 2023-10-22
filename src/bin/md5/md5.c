@@ -36,6 +36,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <errno.h>
+#include <util.h>
 
 #include <md5.h>
 #include <rmd160.h>
