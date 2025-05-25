@@ -1,4 +1,4 @@
-/* $OpenBSD: signify.c,v 1.136 2022/08/26 00:24:56 kn Exp $ */
+/* $OpenBSD: signify.c,v 1.137 2025/05/20 01:03:56 tedu Exp $ */
 /*
  * Copyright (c) 2013 Ted Unangst <tedu@openbsd.org>
  *
@@ -349,7 +349,7 @@ generate(const char *pubkeyfile, const char *seckeyfile, int rounds,
 	    sizeof(pubkey), O_EXCL, 0666);
 }
 
-static void
+const char *
 check_keyname_compliance(const char *pubkeyfile, const char *seckeyfile)
 {
 	const char *pos;
@@ -363,10 +363,7 @@ check_keyname_compliance(const char *pubkeyfile, const char *seckeyfile)
 	len = strlen(seckeyfile);
 	if (len < 5) /* ?.key */
 		goto bad;
-	if (strcmp(pubkeyfile + len - 4, ".pub") != 0 ||
-	    strcmp(seckeyfile + len - 4, ".sec") != 0)
-		goto bad;
-	if (strncmp(pubkeyfile, seckeyfile, len - 4) != 0)
+	if (strcmp(seckeyfile + len - 4, ".sec") != 0)
 		goto bad;
 	if (pubkeyfile != NULL) {
 		pos = strrchr(pubkeyfile, '/');
@@ -381,7 +378,7 @@ check_keyname_compliance(const char *pubkeyfile, const char *seckeyfile)
 			goto bad;
 	}
 
-	return;
+	return seckeyfile;
 bad:
 	errx(1, "please use naming scheme of keyname.pub and keyname.sec");
 }
@@ -394,7 +391,6 @@ createsig(const char *seckeyfile, const char *msgfile, uint8_t *msg,
 	uint8_t xorkey[sizeof(enckey.seckey)];
 	struct sig sig;
 	char *sighdr;
-	char *extname;
 	uint8_t digest[SHA512_DIGEST_LENGTH];
 	int i, nr, rounds;
 	SHA2_CTX ctx;
@@ -402,24 +398,17 @@ createsig(const char *seckeyfile, const char *msgfile, uint8_t *msg,
 
 	readb64file(seckeyfile, &enckey, sizeof(enckey), comment);
 
-	extname = strrchr(seckeyfile, '.');
-	if (extname && strcmp(extname, ".sec") == 0) {
-		const char *keyname;
-		/* basename may or may not modify input */
-		if (!(keyname = strrchr(seckeyfile, '/')))
-			keyname = seckeyfile;
-		else
-			keyname++;
+	if (strcmp(seckeyfile, "-") == 0) {
+ 		nr = snprintf(sigcomment, sizeof(sigcomment),
+		    "signature from %s", comment);
+	} else {
+		const char *keyname = check_keyname_compliance(NULL, 
+		    seckeyfile);
 		nr = snprintf(sigcomment, sizeof(sigcomment),
 		    VERIFYWITH "%.*s.pub", (int)strlen(keyname) - 4, keyname);
-		if (nr == -1 || nr >= sizeof(sigcomment))
-			errx(1, "comment too long");
-	} else {
-		nr = snprintf(sigcomment, sizeof(sigcomment),
-		    "signature from %s", comment);
-		if (nr == -1 || nr >= sizeof(sigcomment))
-			errx(1, "comment too long");
 	}
+	if (nr < 0 || nr >= sizeof(sigcomment))
+		errx(1, "comment too long");
 
 	if (memcmp(enckey.kdfalg, KDFALG, 2) != 0)
 		errx(1, "unsupported KDF");
