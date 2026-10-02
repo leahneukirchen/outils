@@ -1,7 +1,7 @@
 /*
  * Music
  *
- * $OpenBSD: calendar.music,v 1.42 2023/04/02 16:43:42 sthen Exp $
+ * $OpenBSD: calendar.music,v 1.45 2026/08/22 03:12:47 jsg Exp $
  */
 
 #ifndef _calendar_music_
@@ -127,7 +127,7 @@
 03/13	The Allman Brothers record their live album at the Fillmore East, 1971
 03/13	Cesar Cui dies in Smolensk, Russia, 1918
 03/14	Georg Philipp Telemann is born in Magdeburg, 1681
-03/15	Sly Stone born, 1944
+03/15	Sly Stone born in Denton, Texas, 1944
 03/15	Daevid Allen (Gong) dies, 2015
 03/16	Enrique Granados drowns in the English Channel, 1916
 03/17	Paul Kantner (Jefferson Airplane) is born in San Francisco, 1942
@@ -251,10 +251,12 @@
 06/08	Gordon Jacob dies, 1984
 06/09	Les Paul (Lester Polsfuss) is born in Waukesha, Wisconsin, 1915
 06/09	Carl Nielsen is born in Sortelung, Denmark, 1865
+06/09	Sly Stone dies in Granada Hills, Los Angeles, 2025
 06/10	Howlin' Wolf (Chester Burnett) is born in West Point, Mississippi, 1910
 06/10	Judy Garland is born, 1922
 06/10	Ernest Chausson dies in Limary, Seine-et-Oise, France, 1899
 06/11	Richard Strauss is born in Munich, Germany, 1864
+06/11	Brian Wilson (Beach Boys) dies, 2025
 06/12	John Ireland dies, 1962
 06/13	Carlos Chavez is born in Popotla, Mexico, 1899
 06/15	Harry Nilsson is born in Brooklyn, 1941
@@ -266,6 +268,7 @@
 06/17	Igor Stravinsky is born in Oranienbaum (now Lomonosov), Russia, 1882
 06/18	Paul McCartney born in Liverpool, England, 1942
 06/18	Richard Rogers is born in Long Island, New York, 1902
+06/20	Brian Wilson (Beach Boys) is born in Inglewood, California, 1942
 06/20	Jacques Offenbach is born in Cologne, Germany, 1819
 06/21	Columbia records announces the first mass production of LP's, 1948
 06/21	Nikolai Rimsky-Korsakov dies in Lyubensk, Russia, 1908
@@ -356,6 +359,7 @@
 08/27	Josquin Des Prez dies in Conde, 1521
 08/29	Michael Joseph Jackson is born in Gary, Indiana, 1958
 08/29	Lee "Scratch" Perry OD, dub pioneer, dies in Jamaica, 2021
+08/30	James Baker (ReKaB) dies in Bridport, England, 2025
 09/01	Engelbert Humperdinck is born in Siegburg, Germany, 1854
 09/04	Edvard Grieg dies in Bergen, Norway, 1907
 09/04	Anton Bruckner is born in Ansfelden, Austria, 1824
@@ -392,7 +396,7 @@
 09/23	Bruce "The Boss" Springsteen is born in Freehold, New Jersey, 1949
 09/24	Vaclav Nelhybel is born, 1919
 09/25	John Bonham (Led Zeppelin) dies of alcohol poisoning, 1980
-09/25	Dmitri Shostakovich is born in St. Petersberg, Russia, 1906
+09/25	Dmitri Shostakovich is born in St. Petersburg, Russia, 1906
 09/25	Jean Francaix dies, 1997
 09/25	John-Philippe Rameau is born in France, 1683
 09/26	Bela Bartok dies in New York City, 1945

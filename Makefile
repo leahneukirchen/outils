@@ -25,7 +25,7 @@ src/usr.bin/signify/signify: src/usr.bin/signify/signify.o src/usr.bin/signify/c
 
 src/usr.bin/ts/ts: src/usr.bin/ts/ts.o src/liboutils/strlcpy.o src/liboutils/pledge.o
 
-src/usr.bin/calendar/calendar: src/usr.bin/calendar/calendar.o src/usr.bin/calendar/day.o src/usr.bin/calendar/io.o src/usr.bin/calendar/ostern.o src/usr.bin/calendar/paskha.o src/usr.bin/calendar/pesach.o src/liboutils/arc4random_uniform.o src/liboutils/arc4random.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o src/liboutils/pledge.o src/liboutils/sha2.o src/liboutils/strtonum.o
+src/usr.bin/calendar/calendar: src/usr.bin/calendar/calendar.o src/usr.bin/calendar/day.o src/usr.bin/calendar/io.o src/usr.bin/calendar/ostern.o src/usr.bin/calendar/paskha.o src/usr.bin/calendar/pesach.o src/liboutils/arc4random_uniform.o src/liboutils/arc4random.o src/liboutils/getentropy_linux.o src/liboutils/explicit_bzero.o src/liboutils/pledge.o src/liboutils/sha2.o src/liboutils/strtonum.o src/liboutils/unveil.o
 
 src/usr.bin/vis/vis: src/usr.bin/vis/vis.o src/usr.bin/vis/foldit.o src/liboutils/pledge.o src/liboutils/strtonum.o src/liboutils/vis.o
 
